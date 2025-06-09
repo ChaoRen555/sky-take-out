@@ -1,5 +1,6 @@
 package com.sky.context;
 
+//This class is used to obtain the current thread ID.
 public class BaseContext {
 
     public static ThreadLocal<Long> threadLocal = new ThreadLocal<>();
