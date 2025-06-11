@@ -94,10 +94,28 @@ public class EmployeeController {
     /**
      * Enable and Disable Employee Account
      */
-    @PostMapping("/status/{status}")
+    @PostMapping("/status/{status}")//Full Update
     public Result enableAndDisable(@PathVariable Integer status, Long id) {
         log.info("Update employee status : {},{}", status, id);
-        employeeService.update(status,id);
+        employeeService.update(status, id);
+        return Result.success();
+    }
+
+    /**
+     * Query employee
+     */
+    @GetMapping("/{id}")
+    public Result<Employee> getById(@PathVariable Long id) {
+        Employee employee = employeeService.getById(id);
+        return Result.success(employee);
+    }
+
+    /**
+     * Edit employee account
+     */
+    @PutMapping//Partial Update
+    public Result edit(@RequestBody EmployeeDTO employeeDTO) {
+        employeeService.edit(employeeDTO);
         return Result.success();
     }
 }
