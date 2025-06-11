@@ -32,4 +32,9 @@ public interface EmployeeMapper {
      *Pagination Query
      */
     Page<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
+
+    /**
+     * Update employee account
+     */
+    void update(Employee employee);
 }

@@ -72,7 +72,7 @@ public class EmployeeController {
     }
 
     /**
-     *Create new employee
+     * Create new employee
      */
     @PostMapping
     public Result save(@RequestBody EmployeeDTO employeeDTO) {
@@ -82,12 +82,22 @@ public class EmployeeController {
     }
 
     /**
-     *Pagination Query
+     * Pagination Query
      */
     @GetMapping("/page")
     public Result<PageResult> page(EmployeePageQueryDTO employeePageQueryDTO) {
         log.info("Query employee : {}", employeePageQueryDTO);
         PageResult pageResult = employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageResult);
+    }
+
+    /**
+     * Enable and Disable Employee Account
+     */
+    @PostMapping("/status/{status}")
+    public Result enableAndDisable(@PathVariable Integer status, Long id) {
+        log.info("Update employee status : {},{}", status, id);
+        employeeService.update(status,id);
+        return Result.success();
     }
 }

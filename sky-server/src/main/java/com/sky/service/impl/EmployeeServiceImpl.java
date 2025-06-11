@@ -87,7 +87,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeMapper.insert(employee);
     }
 
-    @Override
+    /**
+     * Pagination Query
+     */
     public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
         // PageHelper internally uses ThreadLocal to pass
         // pagination parameters (page number and page size)
@@ -103,6 +105,23 @@ public class EmployeeServiceImpl implements EmployeeService {
         long total = page.getTotal();
         List<Employee> records = page.getResult();
         return new PageResult(total, records);
+    }
+
+    /**
+     * Update employee status
+     */
+    public void update(Integer status, Long id) {
+//        Employee employee = new Employee();
+//        employee.setStatus(status);
+//        employee.setId(id);
+
+        Employee employee = Employee.builder()
+                .status(status)
+                .id(id)
+                .build();
+        employeeMapper.update(employee);
+
+
     }
 
 }
