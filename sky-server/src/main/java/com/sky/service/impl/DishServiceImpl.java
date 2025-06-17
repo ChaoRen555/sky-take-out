@@ -85,11 +85,15 @@ public class DishServiceImpl implements DishService {
         }
 
         //Delete dish data
-        for (Long id : ids) {
-            dishMapper.deleteById(id);
-            //Delete associated flavor data
-            dishFlavorMapper.deleteByDishId(id);
-        }
+//        for (Long id : ids) {
+//            dishMapper.deleteById(id);
+//            //Delete associated flavor data
+//            dishFlavorMapper.deleteByDishId(id);
+//        }
+
+            dishMapper.deleteById(ids);
+
+            dishFlavorMapper.deleteByDishId(ids);
 
     }
 }
