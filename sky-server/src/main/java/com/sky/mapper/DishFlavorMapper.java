@@ -17,5 +17,11 @@ public interface DishFlavorMapper {
     void insertBath(List<DishFlavor> flavors);
 
 
-    void deleteByDishId(List<Long> dishIds);
+    void deleteByDishIds(List<Long> dishIds);
+
+    @Select("select * from dish_flavor where dish_id = #{dishId}")
+    List<DishFlavor> getById(Long dishId);
+
+    @Delete("delete from dish_flavor where dish_id = #{dishId}")
+    void deleteByDishId(Long dishId);
 }
