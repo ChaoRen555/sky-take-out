@@ -25,7 +25,7 @@ public interface DishMapper {
     Integer countByCategoryId(Long categoryId);
 
     /**
-     * Create new dish
+     * Create new dishes
      */
     @AutoFill(value = OperationType.INSERT)
     void insert(Dish dish);
