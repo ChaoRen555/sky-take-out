@@ -9,9 +9,11 @@ import com.sky.service.DishService;
 import com.sky.vo.DishVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Dish Manage
@@ -22,6 +24,8 @@ import java.util.List;
 public class DishController {
     @Autowired
     private DishService dishService;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * Create new dish
@@ -30,6 +34,10 @@ public class DishController {
     public Result save(@RequestBody DishDTO dishDTO) {
         log.info("Create new dish {}", dishDTO);
         dishService.saveWithFlavors(dishDTO);
+
+        //Clean cached data
+        String key = "dish_"+ dishDTO.getCategoryId();
+        redisTemplate.delete(key);
         return Result.success();
     }
 
@@ -49,6 +57,10 @@ public class DishController {
     public Result delete(@RequestParam List<Long> ids) {
         log.info("Delete dish {}", ids);
         dishService.deleteBatch(ids);
+
+        //Clean all cached data with key starting with dish_
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
         return Result.success();
     }
 
@@ -69,6 +81,10 @@ public class DishController {
     public Result update(@RequestBody DishDTO dishDTO) {
         log.info("Update dish {}", dishDTO);
         dishService.updateWithFlavor(dishDTO);
+
+        //Clean all cached data with key starting with dish_
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
         return Result.success();
     }
 }
