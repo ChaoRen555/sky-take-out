@@ -80,7 +80,7 @@ public class DishServiceImpl implements DishService {
         }
 
         //2.Determine whether a dish is associated with a set meal
-        List<Long> setmealIds = setmealDishMapper.getSetmealIdByDishId(ids);
+        List<Long> setmealIds = setmealDishMapper.getSetmealIdsByDishIds(ids);
         if (setmealIds != null && !setmealIds.isEmpty()) {
             throw new DeletionNotAllowedException(MessageConstant.DISH_BE_RELATED_BY_SETMEAL);
         }
