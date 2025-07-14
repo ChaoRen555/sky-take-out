@@ -32,7 +32,6 @@ public class SetmealController {
      */
     @PostMapping
     @CacheEvict(cacheNames = "setmealCache", key = "#setmealDTO.categoryId")
-//    @CacheEvict(cacheNames = "setmealCache", allEntries = true)  delete all cached data.
     //The @CacheEvict annotation is used to remove entries from the cache.
     // It is typically applied to methods that modify data,
     // ensuring that outdated or stale cache entries are cleared after the method runs
@@ -63,6 +62,7 @@ public class SetmealController {
      */
     @DeleteMapping
     @CacheEvict(cacheNames = "setmealCache",allEntries = true)
+    //delete all of entries
     public Result delete(@RequestParam List<Long> ids) {
         setmealService.deleteBatch(ids);
         return Result.success();
